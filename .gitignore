@@ -1,0 +1,9 @@
+*.vtu
+*.pvd
+*.png
+*.json
+Dockerfile
+fracture-damage.tar.gz
+fracture-damage.tar
+build_archive.ps1
+*.csv

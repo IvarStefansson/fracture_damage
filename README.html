@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Reproducibility archive &mdash; Fracture damage simulations</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="reproducibility-archive--fracture-damage-simulations">Reproducibility archive — Fracture damage simulations</h1>
+<p>This archive provides a Docker image and supporting files to reproduce the numerical
+results of <strong>Case 3</strong> from the CouFrac extended abstract</p>
+<blockquote>
+<p><em>Numerical simulation of shear-induced fracture wear in thermoporomechanical media</em></p>
+</blockquote>
+<p>Case 3 is a 3-D thermo-poromechanical simulation of a rock domain containing two
+orthogonal fractures, subjecting to compressive overburden stress, a rising inlet fluid
+pressure, and a temperature drawdown. It explores the coupled effect of dilation and
+friction damage on fracture aperture, permeability, and stress redistribution over
+multiple time steps.</p>
+<hr>
+<h2 id="contents-of-the-archive">Contents of the archive</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>README.md</code></td>
+<td>This file</td>
+</tr>
+<tr>
+<td><code>fracture-damage.tar.gz</code></td>
+<td>Pre-built Docker image (load and run directly)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="software-versions">Software versions</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Version / commit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>3.14.3</td>
+</tr>
+<tr>
+<td>PorePy</td>
+<td>commit <code>3893457804ef1596daac0a42bd34de95c58fa37d</code> (branch <code>fracture-damage-reformulation</code>, <a href="https://github.com/pmgbergen/porepy">https://github.com/pmgbergen/porepy</a>)</td>
+</tr>
+<tr>
+<td>Simulation scripts</td>
+<td>commit <code>17bbd668cfdd22a436226a337e71335ca5996faa</code> (branch <code>main</code>, <a href="https://github.com/IvarStefansson/fracture_damage">https://github.com/IvarStefansson/fracture_damage</a>)</td>
+</tr>
+<tr>
+<td>pypardiso</td>
+<td>0.4.7</td>
+</tr>
+<tr>
+<td>gmsh</td>
+<td>4.15.1</td>
+</tr>
+<tr>
+<td>numpy</td>
+<td>2.4.2</td>
+</tr>
+<tr>
+<td>scipy</td>
+<td>1.17.1</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li><a href="https://docs.docker.com/get-docker/">Docker</a> (tested with Docker Engine ≥ 24)</li>
+<li>~6 GB free disk space for the image</li>
+<li>~4 GB RAM (8 GB recommended for the 32-cell 3-D run)</li>
+</ul>
+<hr>
+<h2 id="quickstart--run-case-3">Quickstart — run Case 3</h2>
+<pre><code class="language-bash"><span class="hljs-comment"># 1. Load the pre-built image</span>
+docker load -i fracture-damage.tar.gz
+
+<span class="hljs-comment"># 2. Run case3.py (results are written inside the container under case3/)</span>
+<span class="hljs-comment">#    Map the output directory to your host to retrieve the CSV results</span>
+<span class="hljs-comment">#    Linux/macOS:</span>
+<span class="hljs-built_in">mkdir</span> -p output
+docker run --<span class="hljs-built_in">rm</span> \
+    -v <span class="hljs-string">&quot;<span class="hljs-subst">$(pwd)</span>/output:/workdir/fracture_damage/case3&quot;</span> \
+    fracture-damage:reproduce \
+    python case3.py
+
+<span class="hljs-comment">#    Windows PowerShell:</span>
+New-Item -ItemType Directory -Force output
+docker run --<span class="hljs-built_in">rm</span> `
+    -v <span class="hljs-string">&quot;<span class="hljs-variable">${PWD}</span>\output:/workdir/fracture_damage/case3&quot;</span> `
+    fracture-damage:reproduce `
+    python case3.py
+</code></pre>
+<p>The simulation runs four damage-model combinations sequentially
+(no damage, dilation only, friction only, dilation + friction) at a 32x32x32
+Cartesian mesh over 8 time steps each.
+Expect a total wall-clock time of several hours on a modern desktop CPU.
+Results are written as CSV files to
+<code>output/isotropic_True/model_thermo/damages_&lt;variant&gt;_num_cells_32/results.csv</code>
+on your host, where <code>&lt;variant&gt;</code> is one of <code>none</code>, <code>dilation</code>, <code>friction</code>, or <code>dilation_friction</code>.</p>
+<h3 id="interactive-shell">Interactive shell</h3>
+<pre><code class="language-bash">docker run -it --<span class="hljs-built_in">rm</span> \
+    -v <span class="hljs-string">&quot;<span class="hljs-subst">$(pwd)</span>/output:/workdir/fracture_damage/case3&quot;</span> \
+    fracture-damage:reproduce bash
+<span class="hljs-comment"># Windows PowerShell: use ${PWD}\output instead of $(pwd)/output</span>
+</code></pre>
+<p>This opens a shell inside the container, where the simulation scripts are in
+<code>/workdir/fracture_damage/</code> and the PorePy library is in <code>/workdir/porepy/</code>.</p>
+<hr>
+<h2 id="generating-plots">Generating plots</h2>
+<p>After running Case 3, the results can be visualised with the bundled <code>plot_case3.py</code>
+script. Run it <strong>inside the container</strong>, mounting the same output directory:</p>
+<pre><code class="language-bash">docker run --<span class="hljs-built_in">rm</span> \
+    -v <span class="hljs-string">&quot;<span class="hljs-variable">${PWD}</span>\output:/workdir/fracture_damage/case3&quot;</span> \
+    fracture-damage:reproduce \
+    python plot_case3.py
+</code></pre>
+<p>Six PNG files are written to <code>output/plots/cell_size_32/thermo/</code> on your host:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inflow_rate.png</code></td>
+<td>Absolute inflow rate vs time for all damage combinations</td>
+</tr>
+<tr>
+<td><code>outflow_rate.png</code></td>
+<td>Absolute outflow rate vs time</td>
+</tr>
+<tr>
+<td><code>flow_anomaly.png</code></td>
+<td>Outflow anomaly relative to the no-damage baseline</td>
+</tr>
+<tr>
+<td><code>damage_evolution.png</code></td>
+<td>Average dilation and friction damage vs time</td>
+</tr>
+<tr>
+<td><code>slip_tendency.png</code></td>
+<td>Slip tendency vs damage scatter with time trajectory</td>
+</tr>
+<tr>
+<td><code>summary_bars.png</code></td>
+<td>Final-time summary bar chart across all combinations</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note (Windows PowerShell):</strong> use <code>${PWD}\output</code> instead of <code>$(pwd)/output</code> in the volume flag.</p>
+</blockquote>
+<hr>
+<h2 id="license">License</h2>
+<p>The simulation scripts are released under the same license as the
+<a href="https://github.com/IvarStefansson/fracture_damage">fracture_damage repository</a>.
+PorePy is released under the MIT license; see the
+<a href="https://github.com/pmgbergen/porepy">PorePy repository</a> for details.</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
