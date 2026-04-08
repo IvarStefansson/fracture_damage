@@ -10,6 +10,7 @@ from typing import Callable, cast
 import numpy as np
 import porepy as pp
 from porepy.viz.data_saving_model_mixin import FractureDeformationExporting
+from porepy.numerics.nonlinear.convergence_check import SimulationStatus
 
 
 @dataclass
@@ -41,7 +42,7 @@ class ParameterStudySaveData:
     average_tangential_jump: float
 
 
-class ParameterStudyDataSaving(pp.PorePyModel):
+class ParameterStudyDataSaving:
     """Mixin class for collecting data for parameter studies.
 
     This class collects boundary flow rates, damage metrics, slip tendency, and
@@ -315,3 +316,49 @@ class ParameterStudyDataSaving(pp.PorePyModel):
             raise ValueError(f"Unknown format {fmt!r}. Choose 'npz', 'csv', or 'txt'.")
 
         print(f"Saved {len(self.results)} time steps to {out}")
+
+    def save_data_time_step(self) -> None:
+        """Override to skip if nonlinear solver did not converge and to only collect
+        data at scheduled times with lower relative tolerance than what is used in the
+        porepy default implementation.
+
+        """
+
+        # Fetching the desired times to export.
+        times_to_export = self.params.get("times_to_export", None)
+        # Skip if the nonlinear solver did not converge.
+        if (
+            self.nonlinear_solver_statistics.simulation_status
+            != SimulationStatus.SUCCESSFUL
+        ) and self.time_manager.time_index > 0:
+            return
+        if times_to_export is None:
+            # Export all time steps if times are not specified.
+            do_export = True
+        else:
+            # If times are specified, export should only occur if the current time is in
+            # the list of times to export.
+            do_export = bool(
+                np.any(np.isclose(self.time_manager.time, times_to_export))
+            )
+
+        if do_export:
+            self.write_pvd_and_vtu()
+
+        # Save solver statistics to file.
+        self.nonlinear_solver_statistics.save()
+
+        # Collecting and storing data in runtime for analysis. If default value of None
+        # is returned, nothing is stored to not burden memory.
+
+        if not self._is_time_dependent():
+            collected_data = self.collect_data()
+            if collected_data is not None:
+                self.results.append(collected_data)
+        else:
+            t = self.time_manager.time  # current time
+            scheduled = self.time_manager.schedule[1:]  # scheduled times except t_init
+            if any(np.isclose(t, scheduled, atol=1e-12, rtol=1e-10)):
+                collected_data = self.collect_data()
+                if collected_data is not None:
+                    self.results.append(collected_data)
